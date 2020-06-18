@@ -606,7 +606,7 @@ vht = Collectable(
     hidden=False,
     action=vht_action,
     onComplete="Unreachable. Report to devs",
-    onFail="This guy can make nice posters!"
+    onFail="These guys can take nice pictures!"
 )
 
 """Add Notes to Locations"""
