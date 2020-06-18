@@ -604,6 +604,7 @@ vht = Collectable(
     "Such lovely images!\n"
     "These were taken by Kaustubh Verma and Amit Yogi!",
     hidden=False,
+    action=vht_action,
     onComplete="Unreachable. Report to devs",
     onFail="This guy can make nice posters!"
 )
@@ -618,6 +619,7 @@ LH5.append_collectable([clue5])
 Rotunda.append_collectable([clue6])
 H8_SR.append_collectable([clue7])
 Shopping_Complex.append_collectable([clue8])
+VH_Terrace.append_collectable([vht])
 
 H5.append_collectable([hostel_cctv])
 H6.append_collectable([hostel_cctv])
