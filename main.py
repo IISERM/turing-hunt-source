@@ -198,7 +198,7 @@ clue8 = Collectable(
     "An unusually clean sheet of paper",
     "Taped to the pillar, above the wash basin",
     "Seems kinda out of place between all these Melody chocolate posters from 2007",
-    hidden=False,
+    hidden=True,
     action=clue8Action,
     nextnotes=None,
     onComplete="Congratulations! You have successfully reached the end of this treasure hunt\n"
@@ -225,7 +225,7 @@ clue7 = Collectable(
     "Either the developer was too sleepy to think of anything better "
     "or this is a wierd place.",
     "Should plug it in my pc to check what it is",
-    hidden=False,
+    hidden=True,
     action=clue7Action,
     nextnotes=[clue8],
     onComplete="That was some smart work! Truly 69 is an important number!",
@@ -259,7 +259,7 @@ clue6 = Collectable(
     "There's also a number lock with two digits!\n",
     hidden=True,
     action=clue6Action,
-    nextnotes=None,
+    nextnotes=[clue7],
     onComplete="The box clicked open! Let's see what's inside."
     "A key to VH Terrace and a Note that says-\n"
     "H-ate me or love me, you need to Study with me",
