@@ -184,6 +184,7 @@ Room69.append_locations([Animal_Facility])
 
 """Build Actual clues"""
 
+
 def clue8Action():
     print("Is half the year over already?!")
     im_show("calender.jpg")
@@ -192,15 +193,16 @@ def clue8Action():
         return True
     return False
 
+
 clue8 = Collectable(
     "An unusually clean sheet of paper",
-    "Taped to the pillar, above the wash basin" ,
-    "Seems kinda out of place between all these Melody chocolate posters from 2007" ,
+    "Taped to the pillar, above the wash basin",
+    "Seems kinda out of place between all these Melody chocolate posters from 2007",
     hidden=False,
     action=clue8Action,
     nextnotes=None,
     onComplete="Congratulations! You have successfully reached the end of this treasure hunt\n"
-               "You can go back to dying of boredom now. Bye.", #something else
+               "You can go back to dying of boredom now. Bye.",  # something else
     onFail="Tsk.Tsk. So close yet so far. Try again.")
 
 
@@ -499,8 +501,11 @@ samrat_inno = Collectable(
 
 
 def art_competition_action():
+    print("- Shivali")
     im_show("art1.jpg")
+    print("- Saloni Sahu")
     im_show("art2.jpg")
+    print("- Shivali")
     im_show("art3.jpg")
     return False
 
@@ -586,6 +591,23 @@ mmystery_poster = Collectable(
     onComplete="Unreachable. Report to devs",
     onFail="This guy can make nice posters!"
 )
+
+
+def vht_action():
+    im_show("trails.jpg")
+    im_show("vht.jpeg")
+
+
+vht = Collectable(
+    "photo album of the night sky",
+    "on the ground",
+    "Such lovely images!\n"
+    "These were taken by Kaustubh Verma and Amit Yogi!",
+    hidden=False,
+    onComplete="Unreachable. Report to devs",
+    onFail="This guy can make nice posters!"
+)
+
 """Add Notes to Locations"""
 
 Computer_Centre.append_collectable([clue1])
