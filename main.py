@@ -225,7 +225,7 @@ clue7 = Collectable(
     "Either the developer was too sleepy to think of anything better "
     "or this is a wierd place.",
     "Should plug it in my pc to check what it is",
-    hidden=False,
+    hidden=True,
     action=clue7Action,
     nextnotes=[clue8],
     onComplete="That was some smart work! Truly 69 is an important number!",

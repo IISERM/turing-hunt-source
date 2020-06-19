@@ -53,6 +53,7 @@ def copyFile(filename):
     dst = askdirectory()
     print("Copied to ", dst)
     src = os.path.join(path_to_res, filename)
+    tkroot.destroy()
     try:
         _ = copy(src, dst)
         return dst
