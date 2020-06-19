@@ -21,7 +21,7 @@ Admin = Location(
     "Admin",
     "You enter the lovely automatic sliding doors, a cool blast of AC...\n"
     "You see the IISER-M model and remember that 4 more hostels need to be built.\n"
-    " But there's no funds...")
+    " But there are no funds...")
 CAF = Location(
     "CAF",
     "Very sensitive machines which may be disturbed by students "
@@ -73,7 +73,7 @@ H8 = Location(
     "It's dark outside, you may need a torch")
 H8_SR = Location(
     'H8 SR',
-    'The ACs are off, it's so hot...\nOh wait, they are on... '
+    'The ACs are off, it\'s so hot...\nOh wait, they are on... '
     'Why is it so hot then? Oh the ACs aren\'t working')
 
 Stadium = Location('Stadium', 'A lapwing shouts in the distance...')
