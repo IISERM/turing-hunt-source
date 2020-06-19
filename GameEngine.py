@@ -55,9 +55,11 @@ def copyFile(filename):
     src = os.path.join(path_to_res, filename)
     try:
         _ = copy(src, dst)
+        tkroot.destroy()
         return dst
     except Exception as e:
         print(e)
+        tkroot.destroy()
         return False
 
 
