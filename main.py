@@ -10,13 +10,13 @@ import matplotlib.pyplot as plt
 Main_Gate = Location(
     "Main Gate",
     "A Nice Big Arch!\n"
-    "Students are coming back from their friday night party at 12am...")
+    "Students are coming back from their Friday night party at 12am...")
 East_Gate = Location(
     "East Gate",
     "A train passes by...")
 T_Point = Location(
     "T point",
-    "Hunh, I can see something weird in this mirror, Oh thats just me...")
+    "Hunh, I can see something weird in this mirror, Oh that's just me...")
 Admin = Location(
     "Admin",
     "You enter the lovely automatic sliding doors, a cool blast of AC...\n"
@@ -73,7 +73,7 @@ H8 = Location(
     "It's dark outside, you may need a torch")
 H8_SR = Location(
     'H8 SR',
-    'The ACs are off, its so hot...\nOh wait, they are on... '
+    'The ACs are off, it's so hot...\nOh wait, they are on... '
     'Why is it so hot then? Oh the ACs aren\'t working')
 
 Stadium = Location('Stadium', 'A lapwing shouts in the distance...')
@@ -223,7 +223,7 @@ clue7 = Collectable(
     "Found a USB drive",
     "Hanging from the ceiling by means of a thread!\n"
     "Either the developer was too sleepy to think of anything better "
-    "or this is a wierd place.",
+    "or this is a weird place.",
     "Should plug it in my pc to check what it is",
     hidden=True,
     action=clue7Action,
@@ -331,7 +331,7 @@ def clue3Action():
 clue3 = Collectable(  # put the clue in lhc rn, change it to anywhere
     "Poster",
     "on the softboard",
-    "Its the poster of the Cubing competition held in college some time back",
+    "It's the poster of the Cubing competition held in college some time back",
     True,  # hidden false to check
     clue3Action,
     nextnotes=[clue4],
@@ -352,7 +352,7 @@ clue2 = Collectable(
     "Quantum Computer",
     "in the BIG BIG hall",
     "Another webpage on the way, on a quantum computer!\n"
-    "They used a qunatum computer for opening a webpage?\n"
+    "They used a quantum computer for opening a webpage?\n"
     "Perfect utilization of a non-existent resource",
     True,
     clue2Action,
