@@ -1,9 +1,10 @@
 import sys
-import imageio
-import time
-import os
-import matplotlib.pyplot as pl
-import webbrowser
+from imageio import imread
+from time import sleep
+from os import name, system
+from os.path import join, dirname, abspath
+from matplotlib.pyplot import imshow, show
+from webbrowser import open_new
 from tkinter import Tk
 from tkinter.filedialog import askdirectory
 from shutil import copy
@@ -11,38 +12,38 @@ from shutil import copy
 if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
     is_exe = True
     bundle_dir = getattr(
-        sys, '_MEIPASS', os.path.abspath(
-            os.path.dirname(__file__)))
-    path_to_res = os.path.join(bundle_dir, 'res')
+        sys, '_MEIPASS', abspath(
+            dirname(__file__)))
+    path_to_res = join(bundle_dir, 'res')
 else:
     is_exe = False
-    path_to_res = os.path.join(os.path.dirname(__file__), 'res')
+    path_to_res = join(dirname(__file__), 'res')
 
 
 def screen_clear():
     # for mac and linux(here, os.name is 'posix')
-    if os.name == 'posix':
-        _ = os.system('clear')
+    if name == 'posix':
+        _ = system('clear')
     else:
         # for windows platfrom
-        _ = os.system('cls')
+        _ = system('cls')
 
 
 def timed_print(msg: str, secs: int):
     print(msg, end="", flush=True)
     for _ in range(secs):
-        time.sleep(1)
+        sleep(1)
         print(".", end="", flush=True)
     print()
 
 
 def im_show(filename: str):
-    filepath = os.path.join(path_to_res, filename)
-    fig = pl.imshow(imageio.imread(filepath))
+    filepath = join(path_to_res, filename)
+    fig = imshow(imread(filepath))
     fig.axes.get_xaxis().set_visible(False)
     fig.axes.get_yaxis().set_visible(False)
     fig.axes.margins(0, tight=None)
-    pl.show()
+    show()
 
 
 def copyFile(filename):
@@ -52,15 +53,13 @@ def copyFile(filename):
     tkroot.withdraw()
     dst = askdirectory()
     print("Copied to ", dst)
-    src = os.path.join(path_to_res, filename)
+    src = join(path_to_res, filename)
     tkroot.destroy()
     try:
         _ = copy(src, dst)
-        tkroot.destroy()
         return dst
     except Exception as e:
         print(e)
-        tkroot.destroy()
         return False
 
 
@@ -72,4 +71,4 @@ def close_game():
 
 
 def opensite(sitename):
-    webbrowser.open_new("file://" + os.path.join(path_to_res, sitename))
+    open_new("file://" + join(path_to_res, sitename))

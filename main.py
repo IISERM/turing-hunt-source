@@ -1,9 +1,9 @@
 import re
 from GameObjects import Location, Collectable, Pocket
 from GameEngine import screen_clear, timed_print, close_game, opensite, im_show, copyFile
-import random
+from random import choice
 import networkx as nx
-import matplotlib.pyplot as plt
+from matplotlib.pyplot import show
 
 """Build all the locations"""
 
@@ -21,7 +21,7 @@ Admin = Location(
     "Admin",
     "You enter the lovely automatic sliding doors, a cool blast of AC...\n"
     "You see the IISER-M model and remember that 4 more hostels need to be built.\n"
-    " But there are no funds...")
+    "But there are no funds...")
 CAF = Location(
     "CAF",
     "Very sensitive machines which may be disturbed by students "
@@ -29,7 +29,7 @@ CAF = Location(
     "You hear someone shouting at someone else in the distance, "
     "but do not record it, for it would be a violation of privacy")
 Library = Location("Library", "So quiet...")
-Computer_Centre = Location("Computer Centre",
+Computer_Center = Location("Computer Center",
                            "A few computers have not been turned off")
 Health_Center = Location("Health Center", "A very dark and scary place...")
 
@@ -83,8 +83,8 @@ VH = Location(
     'Dollar building. The terrace may be locked')
 VH_Terrace = Location(
     'VH Terrace',
-    'Haaah! Nice and windy. You see a couple of friends talking about the'
-    'struggles of life...')
+    'Haaah! Nice and windy.\n'
+    'You see a couple of friends talking about the struggles of life...')
 Shopping_Complex = Location(
     'Shopping Complex',
     'It\'s so empty and quiet. Aunty must have gone home...')
@@ -100,7 +100,7 @@ AB1_3F = Location(
 AB1_4F = Location('AB1 4F', 'Eerily dark and quiet')
 EBL_Lab = Location(
     'EBL',
-    'So many dead flies in flasks.\n It\'s like a horror movie')
+    'So many dead flies in flasks.\nIt\'s like a horror movie')
 AB1_5F = Location(
     'AB1 5F',
     'Eerily dark and quiet, but there\'s some news article about '
@@ -117,32 +117,32 @@ Behind_AB = Location(
     'Behind AB',
     'Aww! 3 cute puppies run up to you.\n'
     r"""
-           ^_         __         __
-      (___/ "`;  \___()"`;  /___()"`;
+           A_         __         __
+      (___/ "`;  [___()"`;  \___()"`;
       /,    /`   /,    /`   /,    /`
-      \\"--\\   //"--//    \\"--\\
+      \\"--\\   //"--//     \\"--\\
 
     """)
-Animal_Facility = Location(
-    'Animal Facility',
+Animal_Center = Location(
+    'Animal Center',
     'The everlasting humm of the machines...\n' +
     'What are these machines? What happens here? SO MANY QUESTIONS!')
 Room69 = Location(
-    'Room No. 69',
+    'Room No 69',
     'Why is it numbered 69 if it is the only room here?\n' +
     'I have found this place unlocked for the first time. Should explore it a bit.')
 
 """Connect the Locations to make a traversable map"""
 Main_Gate.append_locations([Behind_AB, Admin, CAF])
-East_Gate.append_locations([Animal_Facility, Behind_AB])
+East_Gate.append_locations([Animal_Center, Behind_AB])
 T_Point.append_locations([CAF, Outside_LHC, Admin, Health_Center])
 Health_Center.append_locations([T_Point, BB_Court])
 Admin.append_locations([Main_Gate, CAF, T_Point])
 CAF.append_locations([Admin, Main_Gate, T_Point])
-Library.append_locations([Outside_LHC, Gazebo, Computer_Centre])
-Computer_Centre.append_locations([Library])
+Library.append_locations([Outside_LHC, Gazebo, Computer_Center])
+Computer_Center.append_locations([Library])
 
-Outside_LHC.append_locations([T_Point, Library, Rotunda, Animal_Facility])
+Outside_LHC.append_locations([T_Point, Library, Rotunda, Animal_Center])
 LHC.append_locations([LH1, LH2, LH3, LH4, LH5, LH6, LH7, Outside_LHC])
 LH1.append_locations([LHC])
 LH2.append_locations([LHC])
@@ -178,8 +178,8 @@ AB1_5F.append_locations([AB1_4F])
 AB2.append_locations([Gazebo, Behind_AB, AB1])
 Gazebo.append_locations([Library, AB1, AB2, Behind_AB])
 Behind_AB.append_locations([Main_Gate, East_Gate, AB1, AB2, Gazebo])
-Animal_Facility.append_locations([Outside_LHC, East_Gate, ])
-Room69.append_locations([Animal_Facility])
+Animal_Center.append_locations([Outside_LHC, East_Gate, ])
+Room69.append_locations([Animal_Center])
 
 
 """Build Actual clues"""
@@ -195,8 +195,8 @@ def clue8Action():
 
 
 clue8 = Collectable(
-    "An unusually clean sheet of paper",
-    "Taped to the pillar, above the wash basin",
+    "unusually clean sheet of paper",
+    "taped to the pillar, above the wash basin",
     "Seems kinda out of place between all these Melody chocolate posters from 2007",
     hidden=True,
     action=clue8Action,
@@ -211,10 +211,10 @@ def clue7Action():
     a = input("Would you like to proceed?[Y/N]")
     if(a == "Y"):
         _ = copyFile("image.jpg")
-    b = input("Enter the number if you have found it or press N to go back.")
+    b = input("Enter the number if you have found it: ")
     if(b == "690"):
         Pocket.append("Note - Truly, 69 is an important number")
-        Animal_Facility.append_locations([Room69])
+        Animal_Center.append_locations([Room69])
         return True
     return False
 
@@ -252,17 +252,26 @@ def clue6Action():
 
 
 clue6 = Collectable(
-    "An old box",
+    "wooden box",
     "between H6 & H8",
     "It has a paper stuck on it...\n"
     "Man these treasure hunt people need to stop dipping paper in coffee to make it seem old..\n"
-    "There's also a number lock with two digits!\n",
+    "There's also a two digit number lock!\n",
     hidden=True,
     action=clue6Action,
     nextnotes=[clue7],
     onComplete="The box clicked open! Let's see what's inside."
-    "A key to VH Terrace and a Note that says-\n"
-    "H-ate me or love me, you need to Study with me",
+    "A key to VH Terrace and a Note-\n\n"
+    """
+    +=================================+
+    |                                 |
+    |    H-ate me or love me,         | 
+    |    you need to Study with me    |
+    |                                 |
+    +=================================+
+
+    """
+    "They seriously need to drop the coffee trick",
     onFail="The box didn't open.\n"
     "Hehe seems like you're directionally challenged :)\n"
     "Look at it from a different perspective maybe")
@@ -288,7 +297,7 @@ def clue5Action():
 clue5 = Collectable(
     "Bio Pop Quiz",
     "tucked inside the bottle...?",
-    "Why would you do that?\n"
+    "Why would someone do that?\n"
     "A small sheet with a few questions (that will definitely be counted for your consolidated grades :-))",
     True,
     clue5Action,
@@ -371,9 +380,9 @@ def clue1Action():
 
 
 clue1 = Collectable(
-    "Tablet",
-    "on the Table",
-    "You will be led to a webpage. Solve the clue, go to the next",
+    "website",
+    "running on one of the computers",
+    "This website seems like a clue...",
     hidden=False,
     action=clue1Action,
     nextnotes=[clue2],
@@ -430,31 +439,32 @@ fake_clue = Collectable(
 
 def biswas_car_action():
     global here
-    choice: Location = random.choice(
-        [Behind_AB, East_Gate, Animal_Facility, LHC, BB_Court, Stadium, Shopping_Complex])
+    choice: Location = choice(
+        [Behind_AB, East_Gate, Animal_Center, LHC, BB_Court, Stadium, Shopping_Complex])
     print("You followed the car and ended up in " + choice.name + "!")
     here = choice
-    return False
+    return True
 
 
 biswas_car = Collectable(
-    "A Red sedan",
+    "red sedan",
     "coming from Animal Facility road",
     "It's approaching almost quasistatically...\n"
     "Why would someone be driving around at midnight?! This is pretty shady."
     "Probably not important. It's not like they're going to run over anybody.\nRight?\n\nRIGHT?",
     hidden=False,
     action=biswas_car_action,
-    onComplete="Unreachable. Report to devs",
-    onFail="This had better be worth-- \n WAIT! THE DRIVER IS ASLEEP?! *facepalm*")
-
+    onComplete="This had better be worth-- \nWAIT! THE DRIVER IS ASLEEP?! *facepalm*",
+    onFail="Unreachable. Report to devs")
+biswas_car.nextnotes = [biswas_car] # Work around to skip the try again
 
 stadium_test = Collectable(
     name="Rocket Pad",
     spot="in the stadium",
     desc="Lets fly the rocket.\n"
     "It went so high that you can't even see it!!!\n\n\n"
-    "Oh no! It's falling back! RUNNN!",)
+    "Oh no! It's falling back! RUNNN!",
+    hidden=True)
 
 
 def printer_3d_action():
@@ -467,15 +477,16 @@ def printer_3d_action():
 
 
 printer_3d = Collectable(
-    name="a 3D printer",
+    name="3D printer",
     spot="outside physics lab",
-    desc="You go near the 3D printer and see a bunch of MS19 students sleeping around it.\n"
-    "\n\nThey are probably tired from waiting their turn at the printer.",
+    desc="You go near the 3D printer and see a bunch of MS19 students sleeping around it.\n\n"
+    "They are probably tired from waiting their turn at the printer.",
     hidden=True,
     action=printer_3d_action,
     nextnotes=[stadium_test],
     onComplete="The Printer started making weird noises.\n\n\n"
     "You got a 3d printed rocket!\n"
+    "You should try flying it in some open place with a lot of grass.\n"
     "Better get out of here before the MS19 kids wake up.",
     onFail="Lets get outta here")
 
@@ -532,18 +543,20 @@ def room69_action():
 
 
 room69poster = Collectable(
-    name='A lot of cult articles',
+    name='lot of cult articles',
     spot='everywhere, even on the ceiling',
     desc='There is a poster on the wall. Should read it.',
     hidden=False,
     action=room69_action,
-    onFail="Those are some weird things...\n"
-    "I'm hungry now... I should check if Shopping Complex is open",
+    onFail="That is some weird thing...\n"
+    "More than what meets the eye...\n"
+    "Could it be a clue?\n\n"
+    "Eh screw it... I'm hungry now... I should check if Shopping Complex is open",
     onComplete="Unreachable. Report to devs.")
 
 
 def torch_action():
-    print("You turn it on and its very bright!\n")
+    print("You turn it on and it's very bright!\n")
     if input("Do you want to take it [Y N]? ") == "Y":
         H5.append_locations([Rotunda])
         Pocket.append("A red Torch")
@@ -611,7 +624,7 @@ vht = Collectable(
 
 """Add Notes to Locations"""
 
-Computer_Centre.append_collectable([clue1])
+Computer_Center.append_collectable([clue1])
 CAF.append_collectable([clue2])
 EBL_Lab.append_collectable([clue4])
 LHC.append_collectable([art_competition, clue3])
@@ -619,6 +632,7 @@ LH5.append_collectable([clue5])
 Rotunda.append_collectable([clue6])
 H8_SR.append_collectable([clue7])
 Shopping_Complex.append_collectable([clue8])
+
 VH_Terrace.append_collectable([vht])
 
 H5.append_collectable([hostel_cctv])
@@ -634,6 +648,7 @@ Admin.append_collectable([lhckey])
 H5_SR.append_collectable([torch])
 T_Point.append_collectable([biswas_car])
 Room69.append_collectable([room69poster])
+LH1.append_collectable([mmystery_board, mmystery_poster])
 
 
 def makemap(root):
@@ -653,67 +668,108 @@ def makemap(root):
         font_size=7,
         width=2,
         edge_color='#6B6B6B')
-    plt.show()
+    show()
 
 
 hello_banner = '''Welcome to the Virtual Treasure Hunt!
-The Treasure Hunt will go on until you finish it. The first person to finish will win.
-This is an individual game, but you can always team up with someone else.
-But remember that they can hide things from you and win themselves.
-You can use the internet.
+The Treasure Hunt will go on until you finish it.
+Though this is an individual game, it is best served with a side of video call with your friends.
+But remember that they can hide things from you and win themselves. :P
+
+You can use the internet, but it is not necessary to have a continuous connectivity.
 Please remember that if you exit from this app (by pressing the X or by
 shutting down your computer), you will HAVE to restart.
 You can minimize this safely, however.
 We suggest that you also keep a notepad window open to note down information.
 
 Some clues may seem too technical, but they're generally straight forward.
-Just search the internet. Clues may be from
-- HTML and VERY SIMPLE Javascript
-- Python. If you know what loops are, you are good to go
-- Easy Science or math puzzles
-- Some Science Trivia
-
-USE THE INTERNET!
+Just search the internet if you get stuck!
 
 Go forth and do your best!'''
 
-print(hello_banner)
-input("Press Enter to start")
+here = H5_SR
+
+
+def systest():
+    screen_clear()
+    print("This is a system test. Report to devs if any errors are shown.")
+    if input("Enter to Start systest") == "skip":
+        return
+    print()
+    print("You will be shown a map. This test will be a success if you can see the map. Close the map to continue...")
+    input("Enter to continue")
+    makemap(Rotunda)
+    print("makemap success")
+    print()
+
+    print("You will be shown an image. This test will be a success if you can see the image. Close the image to continue...")
+    input("Enter to continue")
+    im_show("owl.jpg")
+    print("im_show success")
+    print()
+
+    print("You will be asked to save a file. Success if file is saved correctly")
+    input("Enter to continue")
+    if copyFile("test.txt"):
+        print("copyFile success")
+    else:
+        print("copyFile fail")
+    print()
+
+    print("You will be redirected to a test site")
+    input("Enter to continue")
+    opensite("test.html")
+    print("If website shown correctly, opensite success")
+    print()
+
+    input("This concludes systest. Enter to continue")
+
+
+def mainloop():
+    global here
+    while True:
+        screen_clear()
+        msg = ""
+        print(here)
+        print("\n\n")
+        print("If you want to search around, type search or ls")
+        print("If you want to view map, type map")
+        print("If you want to view pocket, type pocket")
+        print("If you want to go somewhere else, "
+              "type goto _location_ or cd _location_")
+        print()
+        inp = input("Your choice: ")
+        if re.search(r"^(search|ls)$", inp):
+            msg = here.search()
+        elif match_obj := re.search(r"^(goto|cd) .*", inp):
+            new_loc = inp[len(match_obj.group(1)) + 1:]
+            msg, here = here.goto(new_loc)
+        elif re.search(r"^map$", inp):
+            print("Close map to continue")
+            makemap(here)
+        elif re.search(r"^pocket$", inp):
+            Pocket.show()
+        elif re.search(r"^exit$", inp):
+            if input("Type exit again to exit, anything else to go back: ") == "exit":
+                close_game()
+        else:
+            msg = "Invalid Input"
+        if (msg):
+            timed_print(msg, 3)
+
 
 screen_clear()
-print("This is a sys test. Report to devs if any errors are shown.")
-input("Enter to continue:")
-makemap(Rotunda)
-im_show("rocket.jpg")
-copyFile("mutations.pdf")
+print(hello_banner)
+input("Press Enter to start systest")
+systest()
+screen_clear()
+print("""    How to play - 
+        Use `ls` or `search` to look around for clues and other helpful items
+        Use `goto location name` or `cd location name` to move to connecting locations
+        Use `map` to open up the map. Note that as you collect more items, new locations open up!
+        Use `pocket` to view a list of items collected. This is very helpful if you get stuck.
 
-here = H5_SR
-while True:
-    screen_clear()
-    msg = ""
-    print(here)
-    print("\n\n")
-    print("If you want to search around, type search or ls")
-    print("If you want to view map, type map")
-    print("If you want to view pocket, type pocket")
-    print("If you want to go somewhere else, "
-          "type goto _location_ or cd _location_")
-    print("If you are debugging and want to exit, type exit. "
-          "Remove before publishing to prevent accidental closing")
-
-    inp = input("Your choice: ")
-    if re.search(r"^(search|ls)$", inp):
-        msg = here.search()
-    elif match_obj := re.search(r"^(goto|cd) .*", inp):
-        new_loc = inp[len(match_obj.group(1)) + 1:]
-        msg, here = here.goto(new_loc)
-    elif re.search(r"^map$", inp):
-        makemap(here)
-    elif re.search(r"^pocket$", inp):
-        Pocket.show()
-    elif re.search(r"^exit", inp):
-        close_game()
-    else:
-        msg = "Invalid Input"
-    if (msg):
-        timed_print(msg, 0)
+    Go ahead and enjoy! Good Luck!
+""")
+input("Press Enter to start the Game!")
+mainloop()

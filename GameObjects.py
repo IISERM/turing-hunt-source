@@ -1,4 +1,5 @@
 from typing import Callable, List
+from random import randint
 from GameEngine import screen_clear, timed_print
 
 
@@ -94,7 +95,7 @@ class Location:
         Returns:
             None
         """
-        timed_print("Searching", 5)
+        timed_print("Searching", randint(3,7))
         if len([i for i in self.notes if not i.hidden]) == 0:
             return "Nothing here"
         else:
