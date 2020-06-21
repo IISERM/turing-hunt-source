@@ -342,8 +342,8 @@ clue3 = Collectable(  # put the clue in lhc rn, change it to anywhere
     "Poster",
     "on the softboard",
     "It's the poster of the Cubing competition held in college some time back",
-    True,
-    clue3Action,
+    hidden=True,
+    action=clue3Action,
     nextnotes=[clue4],
     onComplete="Hmm? Is that important?",
     onFail="Just search the net man")
@@ -364,8 +364,8 @@ clue2 = Collectable(
     "Another webpage on the way, on a quantum computer!\n"
     "They used a quantum computer for opening a webpage?\n"
     "Perfect utilization of a non-existent resource",
-    True,
-    clue2Action,
+    hidden=True,
+    action=clue2Action,
     nextnotes=[clue3],  # made clue 3 next
     onComplete="Yeah, this was a joke. Now head to the Large Hadron Collider..?",
     onFail="Noooo! This one is dumb too.")
