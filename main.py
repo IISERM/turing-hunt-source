@@ -188,8 +188,8 @@ Room69.append_locations([Animal_Center])
 def clue8Action():
     print("Is half the year over already?!")
     im_show("calender.jpg")
-    ans = int(input("Enter the correct year: "))
-    if ans == 2036:
+    ans = input("Enter the correct year: ")
+    if ans == "2036":
         return True
     return False
 
@@ -241,8 +241,8 @@ def clue6Action():
             You should be good to go now\n
             """)
 
-    ans = int(input("Enter your password: "))
-    if ans == 22:
+    ans = input("Enter your password: ")
+    if ans == "22":
         Pocket.append(
             "Clue - H-ate me or love me, you need to Study with me")
         Pocket.append("Key to VH Terrace")
@@ -309,7 +309,8 @@ clue5 = Collectable(
 
 
 def clue4Action():
-    if dst := copyFile("mutations.pdf"):
+    dst = copyFile("mutations.pdf")
+    if dst:
         Pocket.append("mutations.pdf in " + dst)
         return True
     return False
@@ -341,7 +342,7 @@ clue3 = Collectable(  # put the clue in lhc rn, change it to anywhere
     "Poster",
     "on the softboard",
     "It's the poster of the Cubing competition held in college some time back",
-    True,  # hidden false to check
+    True,
     clue3Action,
     nextnotes=[clue4],
     onComplete="Hmm? Is that important?",
@@ -439,10 +440,10 @@ fake_clue = Collectable(
 
 def biswas_car_action():
     global here
-    choice: Location = choice(
+    next_loc = choice(
         [Behind_AB, East_Gate, Animal_Center, LHC, BB_Court, Stadium, Shopping_Complex])
-    print("You followed the car and ended up in " + choice.name + "!")
-    here = choice
+    print("You followed the car and ended up in " + next_loc.name + "!")
+    here = next_loc
     return True
 
 
@@ -456,7 +457,7 @@ biswas_car = Collectable(
     action=biswas_car_action,
     onComplete="This had better be worth-- \nWAIT! THE DRIVER IS ASLEEP?! *facepalm*",
     onFail="Unreachable. Report to devs")
-biswas_car.nextnotes = [biswas_car] # Work around to skip the try again
+biswas_car.nextnotes = [biswas_car]  # Work around to skip the try again
 
 stadium_test = Collectable(
     name="Rocket Pad",
@@ -608,7 +609,7 @@ mmystery_poster = Collectable(
 
 def vht_action():
     im_show("trails.jpg")
-    im_show("vht.jpeg")
+    im_show("vht.jpg")
 
 
 vht = Collectable(
@@ -738,10 +739,12 @@ def mainloop():
         print("If you want to go somewhere else, "
               "type goto _location_ or cd _location_")
         print()
+
         inp = input("Your choice: ")
+        match_obj = re.search(r"^(goto|cd) .*", inp)
         if re.search(r"^(search|ls)$", inp):
             msg = here.search()
-        elif match_obj := re.search(r"^(goto|cd) .*", inp):
+        elif match_obj:
             new_loc = inp[len(match_obj.group(1)) + 1:]
             msg, here = here.goto(new_loc)
         elif re.search(r"^map$", inp):
